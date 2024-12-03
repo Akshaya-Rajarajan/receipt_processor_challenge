@@ -1,3 +1,4 @@
+import math
 from django.test import TestCase
 from receipts import views
 # Create your tests here.
@@ -45,3 +46,51 @@ class CalculatePointsTestCase(TestCase):
         }
         points = views.calculate_points(receipt)
         self.assertEqual(points, 8)
+
+    # Test case to check round dollar total amount and multiple of 0.25 points
+    def test_total_round_amount_multiple(self):
+        receipt = {
+            "retailer": "$@!!$",
+            "purchaseDate": "2022-01-04",
+            "purchaseTime": "13:01",
+            "items": [{"shortDescription": "Mountain","price": "1"}],
+            "total": "20.00"
+        }
+        points = views.calculate_points(receipt)
+        self.assertEqual(points, 75)
+
+    # Test case to check only multiple of 0.25 points
+    def test_multiple(self):
+        receipt = {
+            "retailer": "$@!!$",
+            "purchaseDate": "2022-01-04",
+            "purchaseTime": "13:01",
+            "items": [{"shortDescription": "Mountain","price": "1"}],
+            "total": "10.75"
+        }
+        points = views.calculate_points(receipt)
+        self.assertEqual(points, 25)
+
+    # Test case to check item pairs points
+    def test_item_pairs(self):
+        receipt = {
+            "retailer": "$@!!$",
+            "purchaseDate": "2022-01-04",
+            "purchaseTime": "13:01",
+            "items": [{"shortDescription": "Mountain","price": "1"}, {"shortDescription": "Mountain","price": "1"}],
+            "total": "0.2"
+        }
+        points = views.calculate_points(receipt)
+        self.assertEqual(points, 5)
+
+    # Test case to check item description length multiple of 3 
+    def test_item_desc_len(self):
+        receipt = {
+            "retailer": "$@!!$",
+            "purchaseDate": "2022-01-04",
+            "purchaseTime": "13:01",
+            "items": [{"shortDescription": "Dew","price": "4.50"}],
+            "total": "0.2"
+        }
+        points = views.calculate_points(receipt)
+        self.assertEqual(points, math.ceil(4.50 * 0.2))
