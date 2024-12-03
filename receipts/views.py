@@ -23,27 +23,28 @@ def calculate_points(receipt):
     
     points = 0
 
-    #retailer = receipt.get('retailer', None)
-    #items_list = receipt.get('items', [])
-    #total = receipt.get('total', None)
-    #print("TESTTTTTTTTTTT")
-    #print("TESTTTTTTTTTTT")
+    retailer = receipt.get('retailer', None)
+    items_list = receipt.get('items', [])
+    total_points = receipt.get('total', None)
+    date = receipt.get('purchaseDate', None)
+    time = receipt.get('purchaseTime', None)
 
-    #if (retailer == None) or (items_list == []) or (total == None):
-        #raise ValueError("Receipts is missing required details")
-
-
+    #Checking if there are any missing key values in the receipt uploaded by the client. 
+    if retailer == None or total_points == None or items_list == [] or date == None or time == None:
+        raise ValueError("Receipt is missing required details. Upload the complete receipt with retailer, items, total, and date.")
+    
     # calculating points for the alphanumeric char in retailer name 
-    retailer_tuple = tuple(char for char in receipt['retailer'] if char.isalnum()== True)
+    retailer_tuple = tuple(char for char in retailer if char.isalnum()== True)
     points += len(retailer_tuple)
 
-    total = float(receipt['total'])
+    
+    total = float(total_points)
 
     # checking if total is a round dollar amount
     if total.is_integer():
         points += 50
 
-    # checking if total is a multiple of 0.25
+    # checking if total is a multiple of 0.25 by checking if the remainder is 0.
     if total % 0.25 == 0:
         points += 25
 
@@ -58,12 +59,12 @@ def calculate_points(receipt):
             points += math.ceil(price * 0.2)
 
     # checking if purchase day is odd using datetime function
-    purchase_date = datetime.strptime(receipt['purchaseDate'], '%Y-%m-%d')
+    purchase_date = datetime.strptime(date, '%Y-%m-%d')
     if purchase_date.day % 2 != 0:
         points += 6
 
     # checking if purchase time is between 2:00pm - 4:00pm using the datetime function
-    purchase_time = datetime.strptime(receipt['purchaseTime'], '%H:%M')
+    purchase_time = datetime.strptime(time, '%H:%M')
     if 14 <= purchase_time.hour < 16:
         points += 10
 
@@ -85,7 +86,10 @@ class ProcessReceiptsView(APIView):
         else:
             receipt_id = str(uuid.uuid4())
             receipts_map[hash_bill] = receipt_id
-            points = calculate_points(receipt)
+            try:
+                points = calculate_points(receipt)
+            except Exception as e:
+                return Response({"Error":str(e)}, status=status.HTTP_400_BAD_REQUEST)
             points_dict [receipt_id] = points
             return Response({"id": receipt_id}, status=status.HTTP_200_OK)
         
