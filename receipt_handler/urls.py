@@ -17,7 +17,10 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path
+from receipts.views import ProcessReceiptsView, GetPointsView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path('receipts/process', ProcessReceiptsView.as_view(), name='process-receipts'),
+    path('receipts/<str:id>/points', GetPointsView.as_view(), name='get-points'),
 ]
