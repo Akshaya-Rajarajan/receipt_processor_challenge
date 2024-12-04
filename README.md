@@ -1,15 +1,15 @@
 ## Receipt Processor Challenge - Home Test
 ## Content
 
-* [About the Application](about-the-application)
-* [Assumptions](Assumptions)
-* [Extra Features](extra-features)
-* [Installation and Building the Application](installation-and-building-the-application)
-* [Commands to Build and Run the Application Locally](commands-to-build-and-run-the-application-locally)
-* [Commands to Build and Run the Docker Image Locally](commands-to-build-and-run-the-docker-image-locally)
-* [Commands to Pull and Run the Application From My Docker Image](commands-to-pull-and-run-the-application-from-my-docker-image)
-* [Testing the Application](testing-the-application)
-* [Project Structure](project-structure)
+* [About the Application](#about-the-application)
+* [Assumptions](#assumptions)
+* [Extra Features](#extra-features)
+* [Installation and Building the Application](#installation-and-building-the-application)
+* [Commands to Build and Run the Application Locally](#commands-to-build-and-run-the-application-locally)
+* [Commands to Build and Run the Docker Image Locally](#commands-to-build-and-run-the-docker-image-locally)
+* [Commands to Pull and Run the Application From My Docker Image](#commands-to-pull-and-run-the-application-from-my-docker-image)
+* [Testing the Application](#testing-the-application)
+* [Project Structure](#project-structure)
 
 ## About the Application
 This application is a web service built using **Python**, **Django Framework**, and **Rest API** to process receipts uploaded by the clients and reward them with points. 
