@@ -94,3 +94,27 @@ class CalculatePointsTestCase(TestCase):
         }
         points = views.calculate_points(receipt)
         self.assertEqual(points, math.ceil(4.50 * 0.2))
+
+    # Test case to check the purchase date and see if points are added in case of odd day
+    def test_odd_day(self):
+        receipt = {
+            "retailer": "$@!!$",
+            "purchaseDate": "2022-01-01",
+            "purchaseTime": "13:01",
+            "items": [{"shortDescription": "MountainDew","price": "4.50"}],
+            "total": "0.2"
+        }
+        points_odd = views.calculate_points(receipt)
+        self.assertEqual(points_odd, 6)
+
+    # Test case to check the purchase time between 2:00pm - 4:00pm 
+    def test_time_points(self):
+        receipt = {
+            "retailer": "$@!!$",
+            "purchaseDate": "2022-01-04",
+            "purchaseTime": "14:05",
+            "items": [{"shortDescription": "MDew","price": "4.50"}],
+            "total": "0.2"
+        }
+        points = views.calculate_points(receipt)
+        self.assertEqual(points, 10)
