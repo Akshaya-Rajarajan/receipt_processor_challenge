@@ -23,6 +23,7 @@ If the trimmed length of the item description is a multiple of 3, multiply the p
 - **RESTful API** for processing receipts and retrieving points.
 - In-memory storage using dictionaries.
 - Hashing of receipts to avoid uploading of redundant receipts and reduce time complexity in case of duplicate receipts.
+![Screenshot redundant receipt message] (images/Screenshot_duplicate_receipt.png)
 - Assumed a proper receipt should have all the important keys like retailer, date, time, at least one item and total.
 - Unit testing performed.
 - Fully dockerized for easy deployment and testing.
@@ -64,9 +65,17 @@ python manage.py runserver
 1. After you start the server and hit the localhost:8000 link, you should get a 404 page not found page in which both the endpoints can be seen.
 2. Now go to http://127.0.0.1:8000/receipts/process the post endpoint. 
 3. Upload a receipt in JSON format and click the post button
+
+![Screenshot img] (images/Screenshot_post.png)
+
 4. It will return an id of the receipt as a JSON.
+
+![Screenshot img] (images/Screenshot_post_response.png)
+
 5. Now save the Id and hit the link http://localhost:8000/receipts/{id}/points.
 6. This will return the points for that specific receipt in a JSON format.
+
+![Screenshot img] (images/Screenshot_Get.png)
 
 ## How to build the docker image locally and run the application from docker image
 1. Build docker image as follows in your VS code application terminal.
@@ -128,6 +137,7 @@ python manage.py test
 ## Project Structure
 
 * ``` receipts/```: This the main app folder that contains the views.py, which contains the main logic and the API classes and the tests.py contains the unit test done for the logic.
+* ```receipt_handler/urls.py```: This file contains all the url configurations of the applications.
 * ``` manage.py ```: Django's command line utility
 * ``` dockerfile ```: This file contains the configurations needed to build the docker image.
 * ``` requirements.txt ```: This file contains the dependencies needed for this application.
