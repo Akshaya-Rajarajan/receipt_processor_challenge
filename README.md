@@ -1,4 +1,15 @@
 ## Receipt Processor Challenge - Home Test
+## Content
+
+* [About the Application](about-the-application)
+* [Assumptions](Assumptions)
+* [Extra Features](extra-features)
+* [Installation and Building the Application](installation-and-building-the-application)
+* [Commands to Build and Run the Application Locally](commands-to-build-and-run-the-application-locally)
+* [Commands to Build and Run the Docker Image Locally](commands-to-build-and-run-the-docker-image-locally)
+* [Commands to Pull and Run the Application From My Docker Image](commands-to-pull-and-run-the-application-from-my-docker-image)
+* [Testing the Application](testing-the-application)
+* [Project Structure](project-structure)
 
 ## About the Application
 This application is a web service built using **Python**, **Django Framework**, and **Rest API** to process receipts uploaded by the clients and reward them with points. 
@@ -18,30 +29,34 @@ If the trimmed length of the item description is a multiple of 3, multiply the p
 - 6 points if the day in the purchase date is odd.
 - 10 points if the time of purchase is after 2:00pm and before 4:00pm.
 
-## Extra Features and Assumptions:
+## Assumptions
 
-- **RESTful API** for processing receipts and retrieving points.
-- In-memory storage using dictionaries.
+- Assumed the JSON receipt should have all the important keys like retailer, date, time, at least one item and total.
+- Assumed that the clients shouldn't be able to upload the same receipt twice.
+
+
+## Extra Features
 - Hashing of receipts to avoid uploading of redundant receipts and reduce time complexity in case of duplicate receipts.
 
 <img src="images/Screenshot_duplicate_receipt.png" alt="Screenshot redundant receipt message" width="500">
 
-- Assumed a proper receipt should have all the important keys like retailer, date, time, at least one item and total.
-- Unit testing performed.
-- Fully dockerized for easy deployment and testing.
+- Raised exceptions using try and except to get expected input from the clients.
+- Created unit test cases to check if each and every functionality work as expected.(check in receipts/views.py)
+- RESTful API for processing receipts and retrieving points.
+- In-memory storage using dictionaries.
 
-## Installation and building the application
+## Installation and Building the Application
 ### Prerequisites:
 1. Python 3.12 or latest release(3.13)
 2. Visual Studio 
 3. Docker Desktop
 
-## How to build and run the application locally
+## Commands to Build and Run the Application Locally
 To build the application and run it in your local server follow the below steps.
 
 1. Clone my git repository as follows first in your command prompt/terminal 
 ```bash
-git clone 
+git clone https://github.com/Akshaya-Rajarajan/receipt_processor_challenge.git
 cd receipt_processor_challenge
 
 ```
@@ -63,23 +78,8 @@ python manage.py runserver
 ```
 5. Once the server starts running you will get the api link. Press ctrl and click the link to open it in your browser. The api link should be like http://127.0.0.1:8000
 
-## How to use the Endpoints to process the receipts
-1. After you start the server and hit the localhost:8000 link, you should get a 404 page not found page in which both the endpoints can be seen.
-2. Now go to http://127.0.0.1:8000/receipts/process the post endpoint. 
-3. Upload a receipt in JSON format and click the post button
 
-<img src="images/Screenshot_post.png" alt="Screenshot post request" width="500">
-
-4. It will return an id of the receipt as a JSON.
-
-<img src="images/Screenshot_post_response.png" alt="Screenshot post response" width="500">
-
-5. Now save the Id and hit the link http://localhost:8000/receipts/{id}/points.
-6. This will return the points for that specific receipt in a JSON format.
-
-<img src="images/Screenshot_Get.png" alt="Screenshot get request" width="500">
-
-## How to build the docker image locally and run the application from docker image
+## Commands to Build and Run the Docker Image Locally 
 1. Build docker image as follows in your VS code application terminal.
 
 ```bash 
@@ -95,13 +95,31 @@ docker tag <name of image> <your docker_name>/<name of image>
 ```bash
 docker push <your docker_name>/<name of image>
 ```
-## How to run the application from docker image(prebuilt and pushed to dockerhub)
+## Commands to Pull and Run the Application From My Docker Image
 ```bash 
 docker pull akshayarajarajan/receipts-processor-akshaya
 docker run -p 8000:8000 akshayarajarajan/receipts-processor-akshaya
 ```
-## Testing the application
+## Testing the Application
 You can use receipts like the one provided below to test the API using the HTTP client directly or using the API testing tools like Postman or Insomnia or you can check the test cases that I have written in receipts/test.py to do unit testing.
+
+Steps to test the application using the HTTP client:
+
+1. After you start the server and hit the localhost:8000 link, you should get a 404 page not found page in which both the endpoints can be seen.
+2. Now go to http://localhost:8000/receipts/process the post endpoint. 
+3. Upload a receipt in JSON format and click the post button
+
+<img src="images/Screenshot_post.png" alt="Screenshot post request" width="500">
+
+4. It will return an id of the receipt as a JSON.
+
+<img src="images/Screenshot_post_response.png" alt="Screenshot post response" width="500">
+
+5. Now save the Id and hit the link http://localhost:8000/receipts/{id}/points.
+6. This will return the points for that specific receipt in a JSON format.
+
+<img src="images/Screenshot_Get.png" alt="Screenshot get request" width="500">
+
 
 #### How to run the test cases in the test.py 
 In your application terminal run the below command:
