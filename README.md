@@ -86,7 +86,49 @@ docker push <your docker_name>/<name of image>
 ```
 ## How to run the application from docker image(prebuilt and pushed to dockerhub)
 ```bash 
-docker run -p 8000:8000 <name of image>
+docker pull akshayarajarajan/receipts-processor-akshaya
+docker run -p 8000:8000 akshayarajarajan/receipts-processor-akshaya
 ```
+## Testing the application
+You can use receipts like the one provided below to test the API using the HTTP client directly or using the API testing tools like Postman or Insomnia or you can check the test cases that I have written in receipts/test.py to do unit testing.
 
+#### How to run the test cases in the test.py 
+In your application terminal run the below command:
+
+```bash
+python manage.py test
+```
+### Example of JSON Receipt:
+```bash
+{
+  "retailer": "Target",
+  "purchaseDate": "2022-01-01",
+  "purchaseTime": "13:01",
+  "items": [
+    {
+      "shortDescription": "Mountain Dew 12PK",
+      "price": "6.49"
+    },{
+      "shortDescription": "Emils Cheese Pizza",
+      "price": "12.25"
+    },{
+      "shortDescription": "Knorr Creamy Chicken",
+      "price": "1.26"
+    },{
+      "shortDescription": "Doritos Nacho Cheese",
+      "price": "3.35"
+    },{
+      "shortDescription": "   Klarbrunn 12-PK 12 FL OZ  ",
+      "price": "12.00"
+    }
+  ],
+  "total": "35.35"
+}
+```
+## Project Structure
+
+* ``` receipts/```: This the main app folder that contains the views.py, which contains the main logic and the API classes and the tests.py contains the unit test done for the logic.
+* ``` manage.py ```: Django's command line utility
+* ``` dockerfile ```: This file contains the configurations needed to build the docker image.
+* ``` requirements.txt ```: This file contains the dependencies needed for this application.
 
