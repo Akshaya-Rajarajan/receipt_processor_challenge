@@ -23,7 +23,9 @@ If the trimmed length of the item description is a multiple of 3, multiply the p
 - **RESTful API** for processing receipts and retrieving points.
 - In-memory storage using dictionaries.
 - Hashing of receipts to avoid uploading of redundant receipts and reduce time complexity in case of duplicate receipts.
-![Screenshot redundant receipt message] (images/Screenshot_duplicate_receipt.png)
+
+<img src="images/Screenshot_duplicate_receipt.png" alt="Screenshot redundant receipt message" width="500">
+
 - Assumed a proper receipt should have all the important keys like retailer, date, time, at least one item and total.
 - Unit testing performed.
 - Fully dockerized for easy deployment and testing.
@@ -66,16 +68,16 @@ python manage.py runserver
 2. Now go to http://127.0.0.1:8000/receipts/process the post endpoint. 
 3. Upload a receipt in JSON format and click the post button
 
-![Screenshot img] (images/Screenshot_post.png)
+<img src="images/Screenshot_post.png" alt="Screenshot post request" width="500">
 
 4. It will return an id of the receipt as a JSON.
 
-![Screenshot img] (images/Screenshot_post_response.png)
+<img src="images/Screenshot_post_response.png" alt="Screenshot post response" width="500">
 
 5. Now save the Id and hit the link http://localhost:8000/receipts/{id}/points.
 6. This will return the points for that specific receipt in a JSON format.
 
-![Screenshot img] (images/Screenshot_Get.png)
+<img src="images/Screenshot_Get.png" alt="Screenshot get request" width="500">
 
 ## How to build the docker image locally and run the application from docker image
 1. Build docker image as follows in your VS code application terminal.
